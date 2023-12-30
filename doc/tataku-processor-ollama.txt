@@ -1,0 +1,62 @@
+*tataku-processor-ollama.txt*             The processor module for tataku.vim
+=============================================================================
+tataku-processor-ollama ~
+                                                    *tataku-processor-ollama*
+
+The processor module using ollama.
+
+**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**
+
+Contents ~
+                                           *tataku-processor-ollama-contents*
+
+- Dependencies |tataku-processor-ollama-dependencies|
+- Options |tataku-processor-ollama-options|
+- Samples |tataku-processor-ollama-samples|
+
+Dependencies ~
+                                       *tataku-processor-ollama-dependencies*
+
+This plugin needs:
+
+- denops.vim |https://github.com/vim-denops/denops.vim|
+- tataku.vim |https://github.com/Omochice/tataku.vim|
+
+Options ~
+                                            *tataku-processor-ollama-options*
+
+This module has some options.
+
+- `endpoint` *tataku-processor-ollama-options-endpoint*
+
+  Ollama endpoint
+  Default: `http://localhost:11434/api/generate`
+- `model` *tataku-processor-ollama-options-model*
+
+  Model name
+  Specified model is needed to be installed.
+  Default: `codellama`
+- `model` *tataku-processor-ollama-options-prompt*
+
+  Prompt (Required)
+
+Samples ~
+                                            *tataku-processor-ollama-samples*
+
+>
+	let g:tataku_recipes = #{
+	  \   sample: #{
+	  \     processor: #{
+	  \       name: 'ollama',
+	  \       options: #{
+	  \         endpoint: 'http://localhost:11434/api/generate',
+	  \         model: 'codellama',
+	  \         prompt: 'Write me a function that outputs the fibonacci sequence',
+	  \       },
+	  \     }
+	  \   }
+	  \ }
+<
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
