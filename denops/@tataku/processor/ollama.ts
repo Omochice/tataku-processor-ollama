@@ -1,4 +1,4 @@
-import { Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
+import { Denops } from "https://deno.land/x/denops_std@v5.2.0/mod.ts";
 import {
   JSONLinesParseStream,
 } from "https://deno.land/x/jsonlines@v1.2.2/mod.ts";
