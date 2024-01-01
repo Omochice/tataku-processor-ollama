@@ -71,7 +71,6 @@ const processor = (_: Denops, option: unknown) => {
           new WritableStream({
             write: (chunk: OllamaResponse) => {
               if (chunk.done) {
-                controller.terminate();
                 return;
               }
               controller.enqueue([chunk.response]);
