@@ -30,9 +30,6 @@ This module has some options.
   Model name
   Specified model is needed to be installed.
   Default: `codellama`
-- `model` 
-
-  Prompt (Required)
 
 ## Samples 
 
@@ -44,7 +41,6 @@ let g:tataku_recipes = #{
   \       options: #{
   \         endpoint: 'http://localhost:11434/api/generate',
   \         model: 'codellama',
-  \         prompt: 'Write me a function that outputs the fibonacci sequence',
   \       },
   \     }
   \   }
