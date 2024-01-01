@@ -52,10 +52,6 @@ This module has some options.
   Specified model is needed to be installed.
   Default: C<codellama>
 
-=item * C<model> X<tataku-processor-ollama-options-prompt>
-
-  Prompt (Required)
-
 =back
 
 =head2 Samples X<tataku-processor-ollama-samples>
@@ -69,7 +65,6 @@ let g:tataku_recipes = #{
   \       options: #{
   \         endpoint: 'http://localhost:11434/api/generate',
   \         model: 'codellama',
-  \         prompt: 'Write me a function that outputs the fibonacci sequence',
   \       },
   \     }
   \   }

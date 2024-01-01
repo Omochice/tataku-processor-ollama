@@ -12,7 +12,6 @@ import {
 const isOption = is.ObjectOf({
   endpoint: is.OptionalOf(is.String),
   model: is.OptionalOf(is.String),
-  prompt: is.String,
 });
 
 const defaults = {
@@ -34,15 +33,14 @@ const processor = (_: Denops, option: unknown) => {
 
   return new TransformStream({
     transform: async (
-      _chunk: string[],
+      chunk: string[],
       controller: TransformStreamDefaultController<string[]>,
     ) => {
-      // TODO: create prompt by input chunk
       const r = await fetch(option.endpoint ?? defaults.endpoint, {
         method: "POST",
         body: JSON.stringify({
           model: option.model ?? defaults.model,
-          prompt: option.prompt,
+          prompt: chunk.join(""),
         }),
       });
 
