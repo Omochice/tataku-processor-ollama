@@ -14,10 +14,12 @@ const isOption = is.ObjectOf({
   model: is.OptionalOf(is.String),
 });
 
-const defaults = {
+type Option = PredicateType<typeof isOption>;
+
+const defaults: Required<Option> = {
   endpoint: "http://localhost:11434/api/generate",
   model: "codellama",
-} as const;
+};
 
 const isResponse = is.ObjectOf({
   model: is.String,
@@ -31,15 +33,17 @@ type OllamaResponse = PredicateType<typeof isResponse>;
 const processor = (_: Denops, option: unknown) => {
   assert(option, isOption);
 
+  const opt: Required<Option> = { ...defaults, ...option };
+
   return new TransformStream({
     transform: async (
       chunk: string[],
       controller: TransformStreamDefaultController<string[]>,
     ) => {
-      const r = await fetch(option.endpoint ?? defaults.endpoint, {
+      const r = await fetch(opt.endpoint, {
         method: "POST",
         body: JSON.stringify({
-          model: option.model ?? defaults.model,
+          model: opt.model,
           prompt: chunk.join(""),
         }),
       });
