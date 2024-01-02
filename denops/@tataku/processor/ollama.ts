@@ -33,6 +33,22 @@ const isResponse = is.ObjectOf({
 
 type OllamaResponse = PredicateType<typeof isResponse>;
 
+class OllamaResponseEnsureStream implements TransformStream {
+  readonly writable: WritableStream<unknown>;
+  readonly readable: ReadableStream<OllamaResponse>;
+  constructor() {
+    const { writable, readable } = new TransformStream({
+      transform: (
+        chunk: unknown,
+        controller: TransformStreamDefaultController<OllamaResponse>,
+      ) => {
+        controller.enqueue(ensure(chunk, isResponse));
+      },
+    });
+    this.writable = writable;
+    this.readable = readable;
+  }
+}
 
 const notify = async (denops: Denops, message: string, option: Option) => {
   if (option.silent) {
@@ -73,14 +89,7 @@ const processor = (denops: Denops, option: unknown) => {
         ).pipeThrough(
           new JSONLinesParseStream(),
         ).pipeThrough(
-          new TransformStream({
-            transform: (
-              chunk: unknown,
-              controller: TransformStreamDefaultController<OllamaResponse>,
-            ) => {
-              controller.enqueue(ensure(chunk, isResponse));
-            },
-          }),
+          new OllamaResponseEnsureStream(),
         ).pipeTo(
           new WritableStream({
             write: async (chunk: OllamaResponse) => {
