@@ -8,10 +8,12 @@ import {
   is,
   type PredicateType,
 } from "https://deno.land/x/unknownutil@v3.11.0/mod.ts";
+import { echo } from "https://deno.land/x/denops_std@v5.2.0/helper/echo.ts";
 
 const isOption = is.ObjectOf({
   endpoint: is.OptionalOf(is.String),
   model: is.OptionalOf(is.String),
+  silent: is.OptionalOf(is.Boolean),
 });
 
 type Option = PredicateType<typeof isOption>;
@@ -19,6 +21,7 @@ type Option = PredicateType<typeof isOption>;
 const defaults: Required<Option> = {
   endpoint: "http://localhost:11434/api/generate",
   model: "codellama",
+  silent: false,
 };
 
 const isResponse = is.ObjectOf({
@@ -30,7 +33,7 @@ const isResponse = is.ObjectOf({
 
 type OllamaResponse = PredicateType<typeof isResponse>;
 
-const processor = (_: Denops, option: unknown) => {
+const processor = (denops: Denops, option: unknown) => {
   assert(option, isOption);
 
   const opt: Required<Option> = { ...defaults, ...option };
