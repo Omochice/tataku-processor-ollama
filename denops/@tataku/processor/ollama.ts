@@ -33,6 +33,14 @@ const isResponse = is.ObjectOf({
 
 type OllamaResponse = PredicateType<typeof isResponse>;
 
+
+const notify = async (denops: Denops, message: string, option: Option) => {
+  if (option.silent) {
+    return;
+  }
+  await echo(denops, message);
+};
+
 const processor = (denops: Denops, option: unknown) => {
   assert(option, isOption);
 
@@ -43,6 +51,7 @@ const processor = (denops: Denops, option: unknown) => {
       chunk: string[],
       controller: TransformStreamDefaultController<string[]>,
     ) => {
+      await notify(denops, "Thinking now...", opt);
       const r = await fetch(opt.endpoint, {
         method: "POST",
         body: JSON.stringify({
@@ -74,8 +83,9 @@ const processor = (denops: Denops, option: unknown) => {
           }),
         ).pipeTo(
           new WritableStream({
-            write: (chunk: OllamaResponse) => {
+            write: async (chunk: OllamaResponse) => {
               if (chunk.done) {
+                await notify(denops, "Done!!", opt);
                 return;
               }
               controller.enqueue([chunk.response]);
