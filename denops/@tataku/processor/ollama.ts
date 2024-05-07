@@ -1,4 +1,4 @@
-import { Denops } from "https://deno.land/x/denops_std@v6.4.1/mod.ts";
+import { Denops } from "https://deno.land/x/denops_std@v6.4.2/mod.ts";
 import {
   JSONLinesParseStream,
 } from "https://deno.land/x/jsonlines@v1.2.2/mod.ts";
@@ -8,7 +8,7 @@ import {
   is,
   type PredicateType,
 } from "https://deno.land/x/unknownutil@v3.18.0/mod.ts";
-import { echo } from "https://deno.land/x/denops_std@v6.4.1/helper/echo.ts";
+import { echo } from "https://deno.land/x/denops_std@v6.4.2/helper/echo.ts";
 
 const isOption = is.ObjectOf({
   endpoint: is.OptionalOf(is.String),
