@@ -7,7 +7,7 @@ import {
   ensure,
   is,
   type PredicateType,
-} from "https://deno.land/x/unknownutil@v3.18.1/mod.ts";
+} from "jsr:@core/unknownutil@3.18.1";
 import { echo } from "https://deno.land/x/denops_std@v6.5.0/helper/echo.ts";
 
 const isOption = is.ObjectOf({
