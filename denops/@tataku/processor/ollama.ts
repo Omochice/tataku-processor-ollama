@@ -1,14 +1,8 @@
 import { Denops } from "https://deno.land/x/denops_std@v6.5.0/mod.ts";
-import {
-  JSONLinesParseStream,
-} from "https://deno.land/x/jsonlines@v1.2.2/mod.ts";
-import {
-  assert,
-  ensure,
-  is,
-  type PredicateType,
-} from "jsr:@core/unknownutil@3.18.1";
+import { ensure, is, type PredicateType } from "jsr:@core/unknownutil@3.18.1";
 import { echo } from "https://deno.land/x/denops_std@v6.5.0/helper/echo.ts";
+import { toTransformStream } from "jsr:@std/streams@0.224.5/to-transform-stream";
+import { Ollama } from "npm:ollama@0.5.2/browser";
 
 const isOption = is.ObjectOf({
   endpoint: is.OptionalOf(is.String),
@@ -19,36 +13,10 @@ const isOption = is.ObjectOf({
 type Option = PredicateType<typeof isOption>;
 
 const defaults: Required<Option> = {
-  endpoint: "http://localhost:11434/api/generate",
+  endpoint: "http://localhost:11434",
   model: "codellama",
   silent: false,
 };
-
-const isResponse = is.ObjectOf({
-  model: is.String,
-  created_at: is.String,
-  response: is.String,
-  done: is.Boolean,
-});
-
-type OllamaResponse = PredicateType<typeof isResponse>;
-
-class OllamaResponseEnsureStream implements TransformStream {
-  readonly writable: WritableStream<unknown>;
-  readonly readable: ReadableStream<OllamaResponse>;
-  constructor() {
-    const { writable, readable } = new TransformStream({
-      transform: (
-        chunk: unknown,
-        controller: TransformStreamDefaultController<OllamaResponse>,
-      ) => {
-        controller.enqueue(ensure(chunk, isResponse));
-      },
-    });
-    this.writable = writable;
-    this.readable = readable;
-  }
-}
 
 const notify = async (denops: Denops, message: string, option: Option) => {
   if (option.silent) {
@@ -58,50 +26,25 @@ const notify = async (denops: Denops, message: string, option: Option) => {
 };
 
 const processor = (denops: Denops, option: unknown) => {
-  assert(option, isOption);
+  const opt: Required<Option> = { ...defaults, ...ensure(option, isOption) };
 
-  const opt: Required<Option> = { ...defaults, ...option };
+  const ollama = new Ollama({ host: opt.endpoint });
 
-  return new TransformStream({
-    transform: async (
-      chunk: string[],
-      controller: TransformStreamDefaultController<string[]>,
-    ) => {
-      await notify(denops, "Thinking now...", opt);
-      const r = await fetch(opt.endpoint, {
-        method: "POST",
-        body: JSON.stringify({
-          model: opt.model,
-          prompt: chunk.join(""),
-        }),
+  return toTransformStream(async function* (src: ReadableStream<string[]>) {
+    await notify(denops, "Thinking now...", opt);
+    for await (const chunk of src) {
+      const response = await ollama.generate({
+        model: opt.model,
+        prompt: chunk.join(""),
+        stream: true,
       });
-
-      if (!r.ok) {
-        controller.error(
-          new Error("ollama response invalid record", { cause: r }),
-        );
-        return;
+      for await (const r of response) {
+        if (r.done) {
+          await notify(denops, "Done!!", opt);
+        }
+        yield [r.response];
       }
-
-      r.body
-        ?.pipeThrough(
-          new TextDecoderStream(),
-        ).pipeThrough(
-          new JSONLinesParseStream(),
-        ).pipeThrough(
-          new OllamaResponseEnsureStream(),
-        ).pipeTo(
-          new WritableStream({
-            write: async (chunk: OllamaResponse) => {
-              if (chunk.done) {
-                await notify(denops, "Done!!", opt);
-                return;
-              }
-              controller.enqueue([chunk.response]);
-            },
-          }),
-        );
-    },
+    }
   });
 };
 
