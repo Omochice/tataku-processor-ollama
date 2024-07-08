@@ -34,12 +34,12 @@ jobs:
             ]
       - name: Create auto commit
         uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
-        if: ${{ steps.branchCheck.outputs.isProtected != true }}
+        if: ${{ steps.branchCheck.outputs.isProtected != 'true' }}
         with:
           commit_message: "docs: update docs"
           branch: ${{ github.head_ref }}
       - name: Create Pull Request
-        if: ${{ steps.branchCheck.outputs.isProtected == true }}
+        if: ${{ steps.branchCheck.outputs.isProtected == 'true' }}
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
         with:
           title: "docs: update docs"
