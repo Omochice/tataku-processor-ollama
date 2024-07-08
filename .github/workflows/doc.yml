@@ -6,26 +6,39 @@ on:
       - main
 
 jobs:
-  docs:
+  generate-document:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          filters: |
+            pod:
+              - README.pod
+      - uses: aquaproj/aqua-installer@6ce1f8848ec8e61f14d57bd5d7597057a6dd187c # v3.0.1
+        if: ${{ steps.changes.outputs.pod == 'true' }}
+        with:
+          aqua_version: v2.28.1
       - name: Check is main protected
-        id: branchCheck
+        if: ${{ steps.changes.outputs.pod == 'true' }}
+        id: branch-check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.token }}" \
-          "https://api.github.com/repos/${{ github.repository }}/branches/main")
-          PROTECTED=$(echo "${RESPONSE}" | jq -r '.protected')
-          echo "${PROTECTED}"
-          echo "{isProtected}={${PROTECTED}}" >> "${GITHUB_OUTPUT}"
+          PROTECTED=$(gh api "/repos/{owner}/{repo}/branches/main" | jq -r '.protected')
+          echo "{isProtected}={${PROTECTED}}" | tee "${GITHUB_OUTPUT}"
       - uses: Omochice/action-normalize-vim-plugin-name@4c0461629dd9dfbce8a5e77ef962d8d719ca1885 # v0.1.0
+        if: ${{ steps.changes.outputs.pod == 'true' }}
         id: normalize
         with:
           trim-tail-dot-vim: true
       - uses: Omochice/action-podeno@5545680f3c7e30f10aa025f2de63bffd90764623 # v0.1.0
+        if: ${{ steps.changes.outputs.pod == 'true' }}
         with:
           config: |
             [
@@ -33,13 +46,13 @@ jobs:
               { type: "vimdoc", in: "README.pod", out: "doc/${{ steps.normalize.outputs.normalizedName }}.txt", },
             ]
       - name: Create auto commit
+        if: ${{ steps.changes.outputs.pod == 'true' && steps.branch-check.outputs.isProtected == 'false' }}
         uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
-        if: ${{ steps.branchCheck.outputs.isProtected != 'true' }}
         with:
           commit_message: "docs: update docs"
           branch: ${{ github.head_ref }}
       - name: Create Pull Request
-        if: ${{ steps.branchCheck.outputs.isProtected == 'true' }}
+        if: ${{ steps.changes.outputs.pod == 'true' && steps.branch-check.outputs.isProtected == 'true' }}
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
         with:
           title: "docs: update docs"
