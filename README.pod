@@ -44,7 +44,7 @@ This module has some options.
 =item * C<endpoint> X<tataku-processor-ollama-options-endpoint>
 
   Ollama endpoint
-  Default: C<http://localhost:11434/api/generate>
+  Default: C<http://localhost:11434>
 
 =item * C<model> X<tataku-processor-ollama-options-model>
 
@@ -63,7 +63,7 @@ let g:tataku_recipes = #{
   \     processor: #{
   \       name: 'ollama',
   \       options: #{
-  \         endpoint: 'http://localhost:11434/api/generate',
+  \         endpoint: 'http://localhost:11434',
   \         model: 'codellama',
   \       },
   \     }
