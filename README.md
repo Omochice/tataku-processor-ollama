@@ -1,37 +1,37 @@
-# tataku-processor-ollama 
+# tataku-processor-ollama
 
 The processor module using ollama.
 
-**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**
+**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**.
 
-## Contents 
+## Contents
 
 - [Dependencies](tataku-processor-ollama-dependencies)
 - [Options](tataku-processor-ollama-options)
 - [Samples](tataku-processor-ollama-samples)
 
-## Dependencies 
+## Dependencies
 
 This plugin needs:
 
 - [denops.vim](https://github.com/vim-denops/denops.vim)
 - [tataku.vim](https://github.com/Omochice/tataku.vim)
 
-## Options 
+## Options
 
 This module has some options.
 
-- `endpoint` 
+- `endpoint`
 
   Ollama endpoint
-  Default: `http://localhost:11434/api/generate`
-- `model` 
+  Default: `http://localhost:11434`
+- `model`
 
   Model name
   Specified model is needed to be installed.
   Default: `codellama`
 
-## Samples 
+## Samples
 
 ```vim
 let g:tataku_recipes = #{
@@ -39,11 +39,10 @@ let g:tataku_recipes = #{
   \     processor: #{
   \       name: 'ollama',
   \       options: #{
-  \         endpoint: 'http://localhost:11434/api/generate',
+  \         endpoint: 'http://localhost:11434',
   \         model: 'codellama',
   \       },
   \     }
   \   }
   \ }
 ```
-
