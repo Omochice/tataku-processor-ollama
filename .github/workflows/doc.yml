@@ -51,12 +51,18 @@ jobs:
         with:
           fix: true
           globs: "README.md"
+      - uses: actions/create-github-app-token@31c86eb3b33c9b601a1f60f98dcbfd1d70f379b4 # v1.10.3
+        id: app-token
+        with:
+          app-id: ${{ secrets.PODENO_APP_ID }}
+          private-key: ${{ secrets.PODENO_PRIVATE_KEY }}
       - name: Create auto commit
         if: ${{ steps.changes.outputs.pod == 'true' && steps.branch-check.outputs.isProtected == 'false' }}
         uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
         with:
           commit_message: "docs: update docs"
           branch: ${{ github.head_ref }}
+          token: ${{ steps.app-token.outputs.token }}
       - name: Create Pull Request
         if: ${{ steps.changes.outputs.pod == 'true' && steps.branch-check.outputs.isProtected == 'true' }}
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
@@ -67,3 +73,4 @@ jobs:
             The docs are generated automaticaly.
           author: "GitHub <noreply@github.com>"
           delete-branch: true
+          token: ${{ steps.app-token.outputs.token }}
