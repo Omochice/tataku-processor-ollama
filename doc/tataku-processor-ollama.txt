@@ -5,7 +5,7 @@ tataku-processor-ollama ~
 
 The processor module using ollama.
 
-**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**
+**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**.
 
 Contents ~
                                            *tataku-processor-ollama-contents*
@@ -30,7 +30,7 @@ This module has some options.
 - `endpoint` *tataku-processor-ollama-options-endpoint*
 
   Ollama endpoint
-  Default: `http://localhost:11434/api/generate`
+  Default: `http://localhost:11434`
 - `model` *tataku-processor-ollama-options-model*
 
   Model name
@@ -46,7 +46,7 @@ Samples ~
 	  \     processor: #{
 	  \       name: 'ollama',
 	  \       options: #{
-	  \         endpoint: 'http://localhost:11434/api/generate',
+	  \         endpoint: 'http://localhost:11434',
 	  \         model: 'codellama',
 	  \       },
 	  \     }
