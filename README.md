@@ -1,4 +1,4 @@
-# tataku-processor-ollama 
+# tataku-processor-ollama
 
 The processor module using ollama.
 
