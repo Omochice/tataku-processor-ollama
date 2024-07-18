@@ -9,7 +9,7 @@ description: The processor module for tataku.vim
 
 The processor module using ollama.
 
-**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**
+**CURRENTLY THIS PLUGIN IS EXPERIMENTAL**.
 
 =head2 Contents X<tataku-processor-ollama-contents>
 
