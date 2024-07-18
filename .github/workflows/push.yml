@@ -5,6 +5,7 @@ on: push
 jobs:
   path-filter:
     outputs:
+      markdown: ${{steps.changes.outputs.markdown}}
       actions: ${{steps.changes.outputs.actions}}
       ts: ${{steps.changes.outputs.ts}}
     runs-on: ubuntu-latest
@@ -15,6 +16,8 @@ jobs:
         id: changes
         with:
           filters: |
+            markdown:
+              - ./**/*.md
             actions:
               - .github/workflows/*.yml
               - .github/workflows/*.yaml
@@ -24,6 +27,13 @@ jobs:
               - .github/workflows/_check-deno.yml
               - ./**/*.ts
               - deno.jsonc
+  check-markdown:
+    needs: path-filter
+    if: needs.path-filter.outputs.markdown == 'true'
+    uses: ./.github/workflows/_check-markdown.yml
+    permissions: {}
+    with:
+      globs: "./**/*.md"
   check-actions:
     needs: path-filter
     if: needs.path-filter.outputs.actions == 'true'
