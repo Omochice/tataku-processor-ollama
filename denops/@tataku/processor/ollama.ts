@@ -2,7 +2,7 @@ import { Denops } from "https://deno.land/x/denops_std@v6.5.1/mod.ts";
 import { ensure, is, type PredicateType } from "jsr:@core/unknownutil@3.18.1";
 import { echo } from "https://deno.land/x/denops_std@v6.5.1/helper/echo.ts";
 import { toTransformStream } from "jsr:@std/streams@0.224.5/to-transform-stream";
-import { Ollama } from "npm:ollama@0.5.2/browser";
+import { Ollama } from "npm:ollama@0.5.6/browser";
 
 const isOption = is.ObjectOf({
   endpoint: is.OptionalOf(is.String),
