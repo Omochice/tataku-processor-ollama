@@ -23,13 +23,10 @@ This module has some options.
 
 - `endpoint`
 
-  Ollama endpoint
-  Default: `http://localhost:11434`
+  Ollama endpoint Default: `http://localhost:11434`
 - `model`
 
-  Model name
-  Specified model is needed to be installed.
-  Default: `codellama`
+  Model name Specified model is needed to be installed. Default: `codellama`
 
 ## Samples
 
