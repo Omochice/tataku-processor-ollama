@@ -21,15 +21,18 @@ jobs:
           filters: |
             markdown:
               - ./**/*.md
+              - CHANGELOG.md
             actions:
               - .github/workflows/*.yml
               - .github/workflows/*.yaml
               - aqua.yaml
+              - CHANGELOG.md
             ts:
               - .github/workflows/push.yml
               - .github/workflows/_check-deno.yml
               - ./**/*.ts
               - deno.jsonc
+              - CHANGELOG.md
   check-markdown:
     needs: path-filter
     if: needs.path-filter.outputs.markdown == 'true'
