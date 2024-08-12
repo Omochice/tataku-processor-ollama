@@ -7,7 +7,7 @@ import {
 } from "jsr:@core/unknownutil@4.0.3";
 import { echo } from "jsr:@denops/std@7.0.3/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.1/to-transform-stream";
-import { Ollama } from "npm:ollama@0.5.6/browser";
+import { Ollama } from "npm:ollama@0.5.7/browser";
 import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.0.2";
 
 const isOption = is.ObjectOf({
