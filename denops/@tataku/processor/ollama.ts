@@ -8,7 +8,7 @@ import {
 import { echo } from "jsr:@denops/std@7.0.3/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.1/to-transform-stream";
 import { Ollama } from "npm:ollama@0.5.8/browser";
-import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.0.2";
+import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.0.3";
 
 const isOption = is.ObjectOf({
   endpoint: as.Optional(is.String),
