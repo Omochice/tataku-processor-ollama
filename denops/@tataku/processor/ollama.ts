@@ -4,7 +4,7 @@ import {
   ensure,
   is,
   type PredicateType,
-} from "jsr:@core/unknownutil@4.2.2";
+} from "jsr:@core/unknownutil@4.3.0";
 import { echo } from "jsr:@denops/std@7.0.3/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.2/to-transform-stream";
 import { Ollama } from "npm:ollama@0.5.8/browser";
