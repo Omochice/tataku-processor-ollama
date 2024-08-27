@@ -1,11 +1,11 @@
-import { Denops } from "jsr:@denops/std@7.0.3";
+import { Denops } from "jsr:@denops/std@7.1.1";
 import {
   as,
   ensure,
   is,
   type PredicateType,
 } from "jsr:@core/unknownutil@4.3.0";
-import { echo } from "jsr:@denops/std@7.0.3/helper/echo";
+import { echo } from "jsr:@denops/std@7.1.1/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.3/to-transform-stream";
 import { Ollama } from "npm:ollama@0.5.8/browser";
 import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.0.3";
