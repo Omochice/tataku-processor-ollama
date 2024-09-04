@@ -6,7 +6,7 @@ import {
   type PredicateType,
 } from "jsr:@core/unknownutil@4.3.0";
 import { echo } from "jsr:@denops/std@7.1.1/helper/echo";
-import { toTransformStream } from "jsr:@std/streams@1.0.3/to-transform-stream";
+import { toTransformStream } from "jsr:@std/streams@1.0.4/to-transform-stream";
 import { Ollama } from "npm:ollama@0.5.8/browser";
 import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.0.3";
 
