@@ -52,6 +52,10 @@ This module has some options.
   Specified model is needed to be installed.
   Default: C<codellama>
 
+=item * C<sytemPrompt> X<tataku-processor-ollama-options-systemPrompt>
+
+  (optional) System prompt for ollama.
+
 =back
 
 =head2 Samples X<tataku-processor-ollama-samples>
