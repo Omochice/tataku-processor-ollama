@@ -23,10 +23,15 @@ This module has some options.
 
 - `endpoint`
 
-  Ollama endpoint Default: `http://localhost:11434`
+  Ollama endpoint. Default: `http://localhost:11434`
 - `model`
 
-  Model name Specified model is needed to be installed. Default: `codellama`
+  Model name. Specified model is needed to be installed. Default: `codellama`
+- `systemPrompt`
+
+  (optional) System prompt for ollama. This prompt sets the context or behavior
+  for the chat model. For example, you can use it to specify the role or
+  instructions that the model should follow when processing the input.
 
 ## Samples
 
