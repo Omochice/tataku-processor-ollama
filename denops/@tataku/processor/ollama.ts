@@ -42,7 +42,7 @@ const processor: ProcessorFactory = (denops: Denops, option: unknown) => {
     await notify(denops, "Thinking now...", opt);
     for await (const chunk of src) {
       const chatMessage: Message[] = chunk.map((content, i) => ({
-        role: i % 2 === 0 ? "user" : "system",
+        role: i % 2 === 0 ? "user" : "assistant",
         content,
       }));
       const messages: Message[] = [
