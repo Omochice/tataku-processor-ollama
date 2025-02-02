@@ -52,6 +52,11 @@ This module has some options.
   Specified model is needed to be installed.
   Default: C<codellama>
 
+=item * C<systemPrompt> X<tataku-processor-ollama-options-systemPrompt>
+
+  (optional) System prompt for ollama. This prompt sets the context or behavior
+  for the chat model. For example, you can use it to specify the role or
+  instructions that the model should follow when processing the input.
 =back
 
 =head2 Samples X<tataku-processor-ollama-samples>
