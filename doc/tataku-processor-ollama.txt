@@ -29,13 +29,18 @@ This module has some options.
 
 - `endpoint` *tataku-processor-ollama-options-endpoint*
 
-  Ollama endpoint
+  Ollama endpoint.
   Default: `http://localhost:11434`
 - `model` *tataku-processor-ollama-options-model*
 
-  Model name
+  Model name.
   Specified model is needed to be installed.
   Default: `codellama`
+- `systemPrompt` *tataku-processor-ollama-options-systemPrompt*
+
+  (optional) System prompt for ollama. This prompt sets the context or behavior
+  for the chat model. For example, you can use it to specify the role or
+  instructions that the model should follow when processing the input.
 
 Samples ~
                                             *tataku-processor-ollama-samples*
