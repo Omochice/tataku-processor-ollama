@@ -43,12 +43,12 @@ This module has some options.
 
 =item * C<endpoint> X<tataku-processor-ollama-options-endpoint>
 
-  Ollama endpoint
+  Ollama endpoint.
   Default: C<http://localhost:11434>
 
 =item * C<model> X<tataku-processor-ollama-options-model>
 
-  Model name
+  Model name.
   Specified model is needed to be installed.
   Default: C<codellama>
 
@@ -57,6 +57,7 @@ This module has some options.
   (optional) System prompt for ollama. This prompt sets the context or behavior
   for the chat model. For example, you can use it to specify the role or
   instructions that the model should follow when processing the input.
+
 =back
 
 =head2 Samples X<tataku-processor-ollama-samples>
