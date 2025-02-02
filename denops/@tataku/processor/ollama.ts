@@ -46,7 +46,9 @@ const processor: ProcessorFactory = (denops: Denops, option: unknown) => {
         content,
       }));
       const messages: Message[] = [
-        opt.systemPrompt ? { role: "system", content: opt.systemPrompt } : [],
+        ...(opt.systemPrompt
+          ? [{ role: "system", content: opt.systemPrompt }]
+          : []),
         ...chatMessage,
       ];
       const response = await ollama.chat({
