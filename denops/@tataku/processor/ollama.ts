@@ -2,8 +2,8 @@ import { Denops } from "jsr:@denops/std@7.5.0";
 import { as, ensure, is, type Predicate } from "jsr:@core/unknownutil@4.3.0";
 import { echo } from "jsr:@denops/std@7.5.0/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.9/to-transform-stream";
-import { Ollama } from "npm:ollama@0.5.12/browser";
-import type { Message } from "npm:ollama@0.5.12/interfaces";
+import { Ollama } from "npm:ollama@0.5.16/browser";
+import type { Message } from "npm:ollama@0.5.16/interfaces";
 import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.2.1";
 
 type Option = {
