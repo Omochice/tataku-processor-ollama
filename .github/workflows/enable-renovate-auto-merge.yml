@@ -5,6 +5,7 @@ on:
 
 jobs:
   enable-auto-merge:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
       contents: write
