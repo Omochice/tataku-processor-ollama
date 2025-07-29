@@ -72,26 +72,22 @@
             program = "${program}/bin/${name}";
           };
         devPackages = rec {
+          # keep-sorted start block=yes
           actions = [
             pkgs.actionlint
             pkgs.ghalint
             pkgs.zizmor
           ];
+          deno = [ pkgs.deno ];
           renovate = [
             pkgs.renovate
           ];
-          deno = [ pkgs.deno ];
+          # keep-sorted end
           default = actions ++ deno ++ renovate ++ [ treefmt.config.build.wrapper ];
         };
       in
       {
-        formatter = treefmt.config.build.wrapper;
-        checks = {
-          formatting = treefmt.config.build.check self;
-        };
-        devShells =
-          devPackages
-          |> pkgs.lib.attrsets.mapAttrs (name: buildInputs: pkgs.mkShell { inherit buildInputs; });
+        # keep-sorted start block=yes
         apps = {
           check-actions =
             ''
@@ -112,6 +108,14 @@
             ''
             |> runAs "check-deno" devPackages.deno;
         };
+        checks = {
+          formatting = treefmt.config.build.check self;
+        };
+        devShells =
+          devPackages
+          |> pkgs.lib.attrsets.mapAttrs (name: buildInputs: pkgs.mkShell { inherit buildInputs; });
+        formatter = treefmt.config.build.wrapper;
+        # keep-sorted end
       }
     );
 }
