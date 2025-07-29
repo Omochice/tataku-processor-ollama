@@ -71,12 +71,27 @@
             type = "app";
             program = "${program}/bin/${name}";
           };
+        devPackages = rec {
+          actions = [
+            pkgs.actionlint
+            pkgs.ghalint
+            pkgs.zizmor
+          ];
+          renovate = [
+            pkgs.renovate
+          ];
+          deno = [ pkgs.deno ];
+          default = actions ++ deno ++ renovate ++ [ treefmt.config.build.wrapper ];
+        };
       in
       {
         formatter = treefmt.config.build.wrapper;
         checks = {
           formatting = treefmt.config.build.check self;
         };
+        devShells =
+          devPackages
+          |> pkgs.lib.attrsets.mapAttrs (name: buildInputs: pkgs.mkShell { inherit buildInputs; });
         apps = {
           check-actions =
             ''
@@ -84,19 +99,18 @@
               ghalint run
               zizmor .github/workflows
             ''
-            |> runAs "check-actions" [
-              pkgs.actionlint
-              pkgs.ghalint
-              pkgs.zizmor
-            ];
+            |> runAs "check-actions" devPackages.actions;
           check-renovate-config =
-            "renovate-config-validator renovate.json5" |> runAs "check-renovate-config" [ pkgs.renovate ];
+            ''
+              renovate-config-validator renovate.json5
+            ''
+            |> runAs "check-renovate-config" devPackages.renovate;
           check-deno =
             ''
               deno task check
               deno task lint
             ''
-            |> runAs "check-deno" [ pkgs.deno ];
+            |> runAs "check-deno" devPackages.deno;
         };
       }
     );
