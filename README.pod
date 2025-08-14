@@ -61,7 +61,7 @@ This module has some options.
 =item * C<think> X<tataku-processor-ollama-options-think>
 
   (optional) Enable model thinking.
-  Use true/false or specify a level ("high" | "medium" | "low").
+  Use C<true>/C<false> or specify a level (C<"high"> | C<"medium"> | C<"low">).
   Requires model support.
 
 =back
