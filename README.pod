@@ -58,6 +58,12 @@ This module has some options.
   for the chat model. For example, you can use it to specify the role or
   instructions that the model should follow when processing the input.
 
+=item * C<think> X<tataku-processor-ollama-options-think>
+
+  (optional) Enable model thinking.
+  Use true/false or specify a level ("high" | "medium" | "low").
+  Requires model support.
+
 =back
 
 =head2 Samples X<tataku-processor-ollama-samples>
