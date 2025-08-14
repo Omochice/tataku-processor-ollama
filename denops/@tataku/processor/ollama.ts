@@ -11,6 +11,7 @@ type Option = {
   model: string;
   silent: boolean;
   systemPrompt?: string;
+  think?: boolean | "high" | "medium" | "low";
 };
 
 const isOption = is.ObjectOf({
@@ -18,13 +19,20 @@ const isOption = is.ObjectOf({
   model: as.Optional(is.String),
   silent: as.Optional(is.Boolean),
   systemPrompt: as.Optional(is.String),
+  think: as.Optional(is.UnionOf([
+    is.Boolean,
+    is.LiteralOf("high"),
+    is.LiteralOf("medium"),
+    is.LiteralOf("low"),
+  ])),
 }) satisfies Predicate<Partial<Option>>;
 
-const defaults: Option = {
+const defaults = {
   endpoint: "http://localhost:11434",
   model: "codellama",
   silent: false,
-};
+  think: false,
+} as const satisfies Option;
 
 const notify = async (denops: Denops, message: string, option: Option) => {
   if (option.silent) {
@@ -55,6 +63,7 @@ const processor: ProcessorFactory = (denops: Denops, option: unknown) => {
         model: opt.model,
         messages: messages,
         stream: true,
+        think: opt.think,
       });
       for await (const r of response) {
         if (r.done) {
