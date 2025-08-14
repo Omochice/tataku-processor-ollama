@@ -3,7 +3,7 @@ import { as, ensure, is, type Predicate } from "jsr:@core/unknownutil@4.3.0";
 import { echo } from "jsr:@denops/std@7.6.0/helper/echo";
 import { toTransformStream } from "jsr:@std/streams@1.0.11/to-transform-stream";
 import { Ollama } from "npm:ollama@0.5.17/browser";
-import type { Message } from "npm:ollama@0.5.17/interfaces";
+import type { Message } from "npm:ollama@0.5.17";
 import { ProcessorFactory } from "jsr:@omochice/tataku-vim@1.2.1";
 
 type Option = {
