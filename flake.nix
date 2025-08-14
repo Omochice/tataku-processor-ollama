@@ -71,12 +71,23 @@
             type = "app";
             program = "${program}/bin/${name}";
           };
+        devPackages = rec {
+          # keep-sorted start block=yes
+          actions = [
+            pkgs.actionlint
+            pkgs.ghalint
+            pkgs.zizmor
+          ];
+          deno = [ pkgs.deno ];
+          renovate = [
+            pkgs.renovate
+          ];
+          # keep-sorted end
+          default = actions ++ deno ++ renovate ++ [ treefmt.config.build.wrapper ];
+        };
       in
       {
-        formatter = treefmt.config.build.wrapper;
-        checks = {
-          formatting = treefmt.config.build.check self;
-        };
+        # keep-sorted start block=yes
         apps = {
           check-actions =
             ''
@@ -84,20 +95,27 @@
               ghalint run
               zizmor .github/workflows
             ''
-            |> runAs "check-actions" [
-              pkgs.actionlint
-              pkgs.ghalint
-              pkgs.zizmor
-            ];
+            |> runAs "check-actions" devPackages.actions;
           check-renovate-config =
-            "renovate-config-validator renovate.json5" |> runAs "check-renovate-config" [ pkgs.renovate ];
+            ''
+              renovate-config-validator renovate.json5
+            ''
+            |> runAs "check-renovate-config" devPackages.renovate;
           check-deno =
             ''
               deno task check
               deno task lint
             ''
-            |> runAs "check-deno" [ pkgs.deno ];
+            |> runAs "check-deno" devPackages.deno;
         };
+        checks = {
+          formatting = treefmt.config.build.check self;
+        };
+        devShells =
+          devPackages
+          |> pkgs.lib.attrsets.mapAttrs (name: buildInputs: pkgs.mkShell { inherit buildInputs; });
+        formatter = treefmt.config.build.wrapper;
+        # keep-sorted end
       }
     );
 }
