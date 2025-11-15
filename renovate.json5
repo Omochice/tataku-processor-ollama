@@ -1,6 +1,6 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    "github>Omochice/tataku-share-actions#v1.1.28",
+    "github>Omochice/tataku-share-actions#v1.1.29",
   ],
 }
