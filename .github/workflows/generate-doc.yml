@@ -7,7 +7,7 @@ on:
 
 jobs:
   generate-doc:
-    uses: Omochice/tataku-share-actions/.github/workflows/generate-doc.yml@35e5cebe75495cb1e78f3ed4e032aee5d785642e # v2.0.19
+    uses: Omochice/tataku-share-actions/.github/workflows/generate-doc.yml@eca6820aa946b2c8dd61090dace1bc04f91a5ba8 # v2.0.20
     permissions:
       contents: write
       pull-requests: write
